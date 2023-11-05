@@ -12,8 +12,20 @@ const Login: React.FC = () => {
 
   const onFinish = async (values: any) => {
     try {
-      const userCredential: any = await auth.createUserWithEmailAndPassword(values.email_address, values.password)
-      console.log('userCredential====>', userCredential);
+      const userCredential: any = await auth.signInWithEmailAndPassword(values.email_address, values.password)
+      if(userCredential.user) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        auth.currentUser?.getIdTokenResult()
+        .then((idTokenResult: any) => {
+          console.log('idTokenResult==>', idTokenResult);
+          if (!!idTokenResult.claims.admin) {
+            console.log('i am an admin');
+          } else {
+            console.log('i am a HR user');
+            
+          }
+        })
+      }
       setIsLoading(false)
       form.resetFields()
       console.log('====> i got here');
@@ -34,7 +46,7 @@ const Login: React.FC = () => {
         <div className='py-32 px-8'>
         <h3 className='text-gray-700 text-xl font-medium'>Please fill all fields</h3>
         <div className='py-5 w-[60%]'>
-          <Form name='basic' onFinish={onFinish} autoComplete='off'>
+          <Form name='basic' onFinish={onFinish} autoComplete='off' form={form}>
             <div className='flex flex-col gap-3'>
               <p>Email Address</p>
               <TextInput name="email_address" placeholder='Your email address' />

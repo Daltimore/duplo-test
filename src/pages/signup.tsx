@@ -40,7 +40,7 @@ const SignUp: React.FC = () => {
         <div className='py-32 px-8'>
           <h3 className='text-gray-700 text-xl font-medium'>Please fill all fields</h3>
           <div className='py-5 w-[60%]'>
-            <Form name='basic' onFinish={onFinish} autoComplete='off'>
+            <Form name='basic' onFinish={onFinish} autoComplete='off' form={form}>
               <div className='flex flex-col gap-3'>
                 <p>First Name</p>
                 <TextInput name="first_name" placeholder='Your first name' />
