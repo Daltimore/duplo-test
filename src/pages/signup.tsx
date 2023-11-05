@@ -17,10 +17,9 @@ const SignUp: React.FC = () => {
   const onFinish = async (values: any) => {
     setIsLoading(true)
     try {
-      const userCredential: any = await auth.createUserWithEmailAndPassword(values.email_address, values.password)
-      await firestore.collection("users").doc(userCredential.user.uid).set({
-      role: "hr",
-    })
+      const userCredential: any = await completeRegistration(values.email_address, values.password, 'admin')
+      console.log('userCredential', userCredential);
+      
       setIsLoading(false)
       form.resetFields()
       navigate('/login')
@@ -28,6 +27,34 @@ const SignUp: React.FC = () => {
     } catch (error: any) {
       setIsLoading(false)
       console.log('error', error);
+    }
+  }
+
+  const registerUser = async(email: any, password: any) => {
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      return userCredential.user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  const assignUserRole = async(userId: any, role: any) => {
+    try {
+      await firestore.collection("users").doc(userId).set({ role }, { merge: true });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function completeRegistration(email: string, password: string, role: string) {
+    try {
+      const user: any = await registerUser(email, password);
+      await assignUserRole(user.uid, role);
+  
+      return user;
+    } catch (error) {
+      throw error;
     }
   }
 

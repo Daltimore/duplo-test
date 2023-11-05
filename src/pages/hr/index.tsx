@@ -1,10 +1,11 @@
 import React from "react";
+import DashboardLayout from '../../layouts/DashboardLayout'
 
 const HRAdmin: React.FC = () => {
   return (
-    <div>
+    <DashboardLayout>
       <p>ksldkslkd</p>
-    </div>
+    </DashboardLayout>
   )
 }
 

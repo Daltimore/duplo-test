@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 import DefaultLayout from '../layouts/DefaultLayout'
 import { Form } from 'antd'
 import TextInput from '../shared/TextInput'
@@ -7,28 +8,29 @@ import PasswordInput from '../shared/PasswordInput'
 
 const Login: React.FC = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false as boolean)
 
   const onFinish = async (values: any) => {
+    setIsLoading(true)
     try {
       const userCredential: any = await auth.signInWithEmailAndPassword(values.email_address, values.password)
       if(userCredential.user) {
+        setIsLoading(false)
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         auth.currentUser?.getIdTokenResult()
         .then((idTokenResult: any) => {
           console.log('idTokenResult==>', idTokenResult);
           if (!!idTokenResult.claims.admin) {
             console.log('i am an admin');
+
           } else {
             console.log('i am a HR user');
-            
+            navigate('/hr')
           }
         })
       }
-      setIsLoading(false)
-      form.resetFields()
-      console.log('====> i got here');
       
     } catch (error: any) {
       setIsLoading(false)
