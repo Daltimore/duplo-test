@@ -19,7 +19,7 @@ const SignUp: React.FC = () => {
     try {
       const userCredential: any = await auth.createUserWithEmailAndPassword(values.email_address, values.password)
       await firestore.collection("users").doc(userCredential.user.uid).set({
-      role: "user",
+      role: "hr",
     })
       setIsLoading(false)
       form.resetFields()
