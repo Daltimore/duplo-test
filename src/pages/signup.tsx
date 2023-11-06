@@ -6,8 +6,6 @@ import { Form } from 'antd'
 import TextInput from '../shared/TextInput'
 import PasswordInput from '../shared/PasswordInput'
 
-// type NotificationType = 'success' | 'error'
-
 const SignUp: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
