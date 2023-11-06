@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import SignUpPage from './pages/signup'
 import LoginPage from './pages/login'
 import HrDashboard from './pages/hr/index'
+import AdminDashboard from './pages/admin'
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
             <Route path={'/'} element={<SignUpPage />} />
             <Route path={'/login'} element={<LoginPage />} />
             <Route path={'/hr'} element={<HrDashboard />} />
+            <Route path={'/admin'} element={<AdminDashboard />} />
           </Routes>
         </Router>
       </Suspense>

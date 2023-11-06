@@ -16,18 +16,17 @@ const SignUp: React.FC = () => {
 
   const onFinish = async (values: any) => {
     setIsLoading(true)
-    try {
-      const userCredential: any = await completeRegistration(values.email_address, values.password, 'admin')
-      console.log('userCredential', userCredential);
-      
-      setIsLoading(false)
-      form.resetFields()
-      navigate('/login')
-      
-    } catch (error: any) {
-      setIsLoading(false)
-      console.log('error', error);
-    }
+
+      await completeRegistration(values.email_address, values.password, 'hr', values.first_name, values.last_name)
+      .then(() => {
+        setIsLoading(false)
+        form.resetFields()
+        navigate('/login')
+      })
+      .catch((err: any) => {
+        setIsLoading(false)
+        console.log('error', err);
+      })
   }
 
   const registerUser = async(email: any, password: any) => {
@@ -39,18 +38,22 @@ const SignUp: React.FC = () => {
     }
   }
 
-  const assignUserRole = async(userId: any, role: any) => {
+  const assignUserRole = async(user: any, role: any, firstName: string, lastName: string) => {
     try {
-      await firestore.collection("users").doc(userId).set({ role }, { merge: true });
+      await firestore.collection('users').doc(user.uid).set({
+        firstName,
+        lastName,
+        role: role,
+      });
     } catch (error) {
       throw error;
     }
   }
 
-  async function completeRegistration(email: string, password: string, role: string) {
+  async function completeRegistration(email: string, password: string, role: string,  firstName: string, lastName: string) {
     try {
       const user: any = await registerUser(email, password);
-      await assignUserRole(user.uid, role);
+      await assignUserRole(user.uid, role, firstName, lastName);
   
       return user;
     } catch (error) {

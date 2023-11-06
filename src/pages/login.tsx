@@ -18,10 +18,8 @@ const Login: React.FC = () => {
       const userCredential: any = await auth.signInWithEmailAndPassword(values.email_address, values.password)
       if(userCredential.user) {
         setIsLoading(false)
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         auth.currentUser?.getIdTokenResult()
         .then((idTokenResult: any) => {
-          console.log('idTokenResult==>', idTokenResult);
           if (!!idTokenResult.claims.admin) {
             console.log('i am an admin');
 
