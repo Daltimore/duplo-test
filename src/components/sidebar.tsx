@@ -67,10 +67,10 @@ const Sidebar: React.FC = () => {
   ]
 
   return (
-    <aside className='h-screen w-60 bg-white py-8 px-5 border-r border-green-900'>
+    <aside className='h-screen w-60 bg-white py-8 px-5'>
       <header className='flex justify-center items-center gap-1.5'>
         <div className='bg-[#377DFF] h-8 w-8 rounded-full'></div>
-        <h3 className='font-medium text-xl'>Human R.</h3>
+        <h3 className='font-medium text-lg'>Human R.</h3>
       </header>
       <div className='pt-10'>
         {
@@ -82,9 +82,9 @@ const Sidebar: React.FC = () => {
                   navItem.sub_items.map((subItem, idx) => (
                     <div key={idx}>
                       <ul className='flex items-center gap-1.5'>
-                        <img src={`./assets/icons/${subItem.link_icon}.svg`} alt="" />
-                        <li className='pb-4'>
-                          <a href="#" className='text-gray-400 font-medium'>{subItem.name}</a>
+                        <img src={`../assets/icons/${subItem.link_icon}.svg`} alt="" />
+                        <li className='pb-4 !cursor-pointer'>
+                          <a href="#" className='text-gray-400 font-medium !cursor-pointer text-sm'>{subItem.name}</a>
                         </li>
                       </ul>
                     </div>
